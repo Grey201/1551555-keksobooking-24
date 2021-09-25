@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Сергей Легенчук](https://up.htmlacademy.ru/javascript/24/user/1551555).
-* Наставник: `Артём Рудов`.
+* Студент: [Сергей Легенчук](https://htmlacademy.ru/profile/id1551555).
+* Наставник: `Артём Рудов`(https://htmlacademy.ru/profile/artrudov).
 
 ---
 

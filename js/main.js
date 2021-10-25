@@ -38,18 +38,13 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-const MINPRICE = 100,
-  MAXPRICE = 2000;
-const MINNUMBEROFROOMS = 1,
-  MAXNUMBEROFROOMS = 6;
-const MINNUMBEROFGUESTS = 1,
-  MAXNUMBEROFGUESTS = 7;
-const LOCATIONLATMIN = 35.65,
-  LOCATIONLATMAX = 35.7,
-  LOCATIONLATPRECISION = 5;
-const LOCATIONLNGMIN = 139.7,
-  LOCATIONLNGMAX = 139.8,
-  LOCATIONLNGPRECISION = 5;
+const MINPRICE = 100;
+const MAXPRICE = 2000;
+const MINNUMBEROFROOMS = 1;
+const MAXNUMBEROFROOMS = 6;
+const MINNUMBEROFGUESTS = 1;
+const MAXNUMBEROFGUESTS = 7;
+
 const AD_COUNT = 10;
 
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
@@ -86,35 +81,46 @@ function getRandomPositiveFloat(number1, number2, digits = 1) {
   return result.toFixed(digits);
 }
 
-const createAd = () => ({
-  author: {
-    avatar: `img/avatars/user0${getRandomIntenger(1, 10)}.png`,
-  },
-  offer: {
-    title: getRandomArrayElement(TITLE),
-    adress: `${(location.lat = getRandomPositiveFloat(
-      LOCATIONLATMIN,
-      LOCATIONLATMAX,
-      LOCATIONLATPRECISION,
-    ))}, ${(location.lng = getRandomPositiveFloat(
-      LOCATIONLNGMIN,
-      LOCATIONLNGMAX,
-      LOCATIONLNGPRECISION,
-    ))}`,
-    price: getRandomIntenger(MINPRICE, MAXPRICE),
-    type: getRandomArrayElement(TYPE),
-    rooms: getRandomIntenger(MINNUMBEROFROOMS, MAXNUMBEROFROOMS),
-    guests: getRandomIntenger(MINNUMBEROFGUESTS, MAXNUMBEROFGUESTS),
-    checkin: getRandomArrayElement(CHECKIN),
-    checkout: getRandomArrayElement(CHECKOUT),
-    features: getRandomArray(FEATURES),
-    description: getRandomArrayElement(DESCRIPTION),
-    photos: getRandomArray(PHOTOS),
-  },
-  location: {
-    lat: location.lat,
-    lng: location.lng,
-  },
-});
+const createAd = () => {
+  const LOCATIONLATMIN = 35.65;
+  const LOCATIONLATMAX = 35.7;
+  const LOCATIONLATPRECISION = 5;
+  const LOCATIONLNGMIN = 139.7;
+  const LOCATIONLNGMAX = 139.8;
+  const LOCATIONLNGPRECISION = 5;
+  const lat = getRandomPositiveFloat(
+    LOCATIONLATMIN,
+    LOCATIONLATMAX,
+    LOCATIONLATPRECISION,
+  );
+  const lng = getRandomPositiveFloat(
+    LOCATIONLNGMIN,
+    LOCATIONLNGMAX,
+    LOCATIONLNGPRECISION);
 
+  return {
+    author: {
+      avatar: `img/avatars/user0${getRandomIntenger(1, 10)}.png`,
+    },
+    offer: {
+      title: getRandomArrayElement(TITLE),
+      adress: `${(lat)}, ${(lng)}`,
+      price: getRandomIntenger(MINPRICE, MAXPRICE),
+      type: getRandomArrayElement(TYPE),
+      rooms: getRandomIntenger(MINNUMBEROFROOMS, MAXNUMBEROFROOMS),
+      guests: getRandomIntenger(MINNUMBEROFGUESTS, MAXNUMBEROFGUESTS),
+      checkin: getRandomArrayElement(CHECKIN),
+      checkout: getRandomArrayElement(CHECKOUT),
+      features: getRandomArray(FEATURES),
+      description: getRandomArrayElement(DESCRIPTION),
+      photos: getRandomArray(PHOTOS),
+    },
+    location: {
+      lat: lat,
+      lng: lng,
+    },
+  };
+};
 const similaAd = Array.from({ length: AD_COUNT }, createAd);
+
+

@@ -5,11 +5,13 @@ const getRandomIntenger = (min, max) => {
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-getRandomIntenger(12, 25);
 
-function getRandomPositiveFloat(a, b, digits = 1) {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
+/*Функция от Кекса, возвращающая случайное число с плавающей точкой из переданного диапазона
+включительно. Будет использоваться для генерации временных географических координат
+в следующем задании.*/
+function getRandomPositiveFloat(number1, number2, digits = 1) {
+  const lower = Math.min(Math.abs(number1), Math.abs(number2));
+  const upper = Math.max(Math.abs(number1), Math.abs(number2));
   const result = Math.random() * (upper - lower) + lower;
   return result.toFixed(digits);
 }
@@ -59,8 +61,8 @@ const AD_COUNT = 10;
 const getRandomArrayElement = (elements) => elements[getRandomIntenger(0, elements.length - 1)];
 const getRandomArray = (arr) => {
   const randomArray = [];
-  for (let i = 0; i < getRandomIntenger(0, arr.length); i++) {
-    randomArray.push(arr[i]);
+  for (let element = 0; element < getRandomIntenger(0, arr.length); element++) {
+    randomArray.push(arr[element]);
   }
   return randomArray;
 };
@@ -96,3 +98,4 @@ const createAd = () => {
 };
 const similaAd = Array.from({ length: AD_COUNT }, createAd);
 
+// console.log(similaAd);

@@ -1,21 +1,3 @@
-// Функция, возвращающая случайное целое число из переданного диапазона включительно
-const getRandomIntenger = (min, max) => {
-  if (min < 0 || max < 0 || min >= max) {
-    return 'Ошибка! Введенное число меньше нуля, либо числа равны друг другу!';
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-/*Функция от Кекса, возвращающая случайное число с плавающей точкой из переданного диапазона
-включительно. Будет использоваться для генерации временных географических координат
-в следующем задании.*/
-function getRandomPositiveFloat(number1, number2, digits = 1) {
-  const lower = Math.min(Math.abs(number1), Math.abs(number2));
-  const upper = Math.max(Math.abs(number1), Math.abs(number2));
-  const result = Math.random() * (upper - lower) + lower;
-  return result.toFixed(digits);
-}
-
 const TITLE = [
   'У оленя',
   'В госях у Красной Шапочки',
@@ -56,46 +38,83 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-
+const MINPRICE = 100,
+  MAXPRICE = 2000;
+const MINNUMBEROFROOMS = 1,
+  MAXNUMBEROFROOMS = 6;
+const MINNUMBEROFGUESTS = 1,
+  MAXNUMBEROFGUESTS = 7;
+const LOCATIONLATMIN = 35.65,
+  LOCATIONLATMAX = 35.7,
+  LOCATIONLATPRECISION = 5;
+const LOCATIONLNGMIN = 139.7,
+  LOCATIONLNGMAX = 139.8,
+  LOCATIONLNGPRECISION = 5;
 const AD_COUNT = 10;
-const getRandomArrayElement = (elements) => elements[getRandomIntenger(0, elements.length - 1)];
+
+// Функция, возвращающая случайное целое число из переданного диапазона включительно
+const getRandomIntenger = (min, max) => {
+
+  if (min < 0 || max < 0 || min >= max) {
+
+    return 'Ошибка! Введенное число меньше нуля, либо числа равны друг другу!';
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const getRandomArrayElement = (elements) =>
+  elements[getRandomIntenger(0, elements.length - 1)];
 const getRandomArray = (arr) => {
   const randomArray = [];
+
   for (let element = 0; element < getRandomIntenger(0, arr.length); element++) {
     randomArray.push(arr[element]);
   }
+
   return randomArray;
 };
 
-const createAd = () => {
-  const AUTHOR = new Object();
-  AUTHOR.avatar = `img/avatars/user0${getRandomIntenger(1, 10)}.png`; //Адреса
-  const OFFER = new Object();
-  OFFER.title = getRandomArrayElement(TITLE);
-  OFFER.adress = `${(location.lat = getRandomPositiveFloat(
-    35.65,
-    35.7,
-    5,
-  ))}, ${(location.lng = getRandomPositiveFloat(139.7, 139.8, 5))}`;
-  OFFER.price = getRandomIntenger(100, 2000);
-  OFFER.type = getRandomArrayElement(TYPE);
-  OFFER.rooms = getRandomIntenger(1, 6);
-  OFFER.guests = getRandomIntenger(1, 7);
-  OFFER.checkin = getRandomArrayElement(CHECKIN);
-  OFFER.checkout = getRandomArrayElement(CHECKOUT);
-  OFFER.features = getRandomArray(FEATURES);
-  OFFER.description = getRandomArrayElement(DESCRIPTION);
-  OFFER.photos = getRandomArray(PHOTOS);
-  const LOCATION = new Object();
-  LOCATION.lat = location.lat;
-  LOCATION.lng = location.lng;
+/*Функция от Кекса, возвращающая случайное число с плавающей точкой из переданного диапазона
+включительно. Будет использоваться для генерации временных географических координат
+в следующем задании.*/
+function getRandomPositiveFloat(number1, number2, digits = 1) {
+  const lower = Math.min(Math.abs(number1), Math.abs(number2));
+  const upper = Math.max(Math.abs(number1), Math.abs(number2));
+  const result = Math.random() * (upper - lower) + lower;
 
-  return {
-    AUTHOR,
-    OFFER,
-    LOCATION,
-  };
-};
+  return result.toFixed(digits);
+}
+
+const createAd = () => ({
+  author: {
+    avatar: `img/avatars/user0${getRandomIntenger(1, 10)}.png`,
+  },
+  offer: {
+    title: getRandomArrayElement(TITLE),
+    adress: `${(location.lat = getRandomPositiveFloat(
+      LOCATIONLATMIN,
+      LOCATIONLATMAX,
+      LOCATIONLATPRECISION,
+    ))}, ${(location.lng = getRandomPositiveFloat(
+      LOCATIONLNGMIN,
+      LOCATIONLNGMAX,
+      LOCATIONLNGPRECISION,
+    ))}`,
+    price: getRandomIntenger(MINPRICE, MAXPRICE),
+    type: getRandomArrayElement(TYPE),
+    rooms: getRandomIntenger(MINNUMBEROFROOMS, MAXNUMBEROFROOMS),
+    guests: getRandomIntenger(MINNUMBEROFGUESTS, MAXNUMBEROFGUESTS),
+    checkin: getRandomArrayElement(CHECKIN),
+    checkout: getRandomArrayElement(CHECKOUT),
+    features: getRandomArray(FEATURES),
+    description: getRandomArrayElement(DESCRIPTION),
+    photos: getRandomArray(PHOTOS),
+  },
+  location: {
+    lat: location.lat,
+    lng: location.lng,
+  },
+});
+
 const similaAd = Array.from({ length: AD_COUNT }, createAd);
-
-// console.log(similaAd);

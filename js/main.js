@@ -44,7 +44,12 @@ const MINNUMBEROFROOMS = 1;
 const MAXNUMBEROFROOMS = 6;
 const MINNUMBEROFGUESTS = 1;
 const MAXNUMBEROFGUESTS = 7;
-
+const LOCATIONLATMIN = 35.65;
+const LOCATIONLATMAX = 35.7;
+const LOCATIONLATPRECISION = 5;
+const LOCATIONLNGMIN = 139.7;
+const LOCATIONLNGMAX = 139.8;
+const LOCATIONLNGPRECISION = 5;
 const AD_COUNT = 10;
 
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
@@ -82,12 +87,6 @@ function getRandomPositiveFloat(number1, number2, digits = 1) {
 }
 
 const createAd = () => {
-  const LOCATIONLATMIN = 35.65;
-  const LOCATIONLATMAX = 35.7;
-  const LOCATIONLATPRECISION = 5;
-  const LOCATIONLNGMIN = 139.7;
-  const LOCATIONLNGMAX = 139.8;
-  const LOCATIONLNGPRECISION = 5;
   const lat = getRandomPositiveFloat(
     LOCATIONLATMIN,
     LOCATIONLATMAX,
@@ -116,8 +115,8 @@ const createAd = () => {
       photos: getRandomArray(PHOTOS),
     },
     location: {
-      lat: lat,
-      lng: lng,
+      lat,
+      lng,
     },
   };
 };

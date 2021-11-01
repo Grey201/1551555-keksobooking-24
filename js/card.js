@@ -7,7 +7,7 @@ const cardTemplate = document
 const similarAds = createAds();
 
 const getSimilarAd = (ad) => {
-  similarAds.forEach((getAd) => {
+  ad.forEach((getAd) => {
     const adElement = cardTemplate.cloneNode(true);
     adElement.querySelector('.popup__title').textContent = getAd.offer.title;
     adElement.querySelector('.popup__text--address').textContent =
@@ -50,3 +50,4 @@ const getSimilarAd = (ad) => {
     mapAd.appendChild(adElement);
   });
 };
+getSimilarAd(similarAds);

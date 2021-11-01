@@ -50,4 +50,5 @@ const getSimilarAd = (ad) => {
     mapAd.appendChild(adElement);
   });
 };
+
 getSimilarAd(similarAds);

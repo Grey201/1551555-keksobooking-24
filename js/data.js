@@ -1,6 +1,8 @@
+import {getRandomIntenger, getRandomArray, getRandomPositiveFloat} from './utils.js';
+
 const TITLE = [
   'У оленя',
-  'В госях у Красной Шапочки',
+  'В гостях у Красной Шапочки',
   'Дом трех поросят',
   'E-flat',
   'Васюкинские зори',
@@ -50,6 +52,44 @@ const LOCATIONLATPRECISION = 5;
 const LOCATIONLNGMIN = 139.7;
 const LOCATIONLNGMAX = 139.8;
 const LOCATIONLNGPRECISION = 5;
-const AD_COUNT = 10;
+const AD_COUNT = 1;
 
-export { TITLE, TYPE, CHECKIN, CHECKOUT, FEATURES, DESCRIPTION, PHOTOS, MINPRICE, MAXPRICE, MINNUMBEROFROOMS, MAXNUMBEROFROOMS, MINNUMBEROFGUESTS, MAXNUMBEROFGUESTS, LOCATIONLATMIN, LOCATIONLATMAX, LOCATIONLATPRECISION, LOCATIONLNGMIN, LOCATIONLNGMAX, LOCATIONLNGPRECISION, AD_COUNT};
+const getRandomArrayElement = (elements) =>
+  elements[getRandomIntenger(0, elements.length - 1)];
+
+const createAd = () => {
+  const lat = getRandomPositiveFloat(
+    LOCATIONLATMIN,
+    LOCATIONLATMAX,
+    LOCATIONLATPRECISION,
+  );
+  const lng = getRandomPositiveFloat(
+    LOCATIONLNGMIN,
+    LOCATIONLNGMAX,
+    LOCATIONLNGPRECISION);
+
+  return {
+    author: {
+      avatar: `img/avatars/user0${getRandomIntenger(1, 10)}.png`,
+    },
+    offer: {
+      title: getRandomArrayElement(TITLE),
+      address: `${(lat)}, ${(lng)}`,
+      price: getRandomIntenger(MINPRICE, MAXPRICE),
+      type: getRandomArrayElement(TYPE),
+      rooms: getRandomIntenger(MINNUMBEROFROOMS, MAXNUMBEROFROOMS),
+      guests: getRandomIntenger(MINNUMBEROFGUESTS, MAXNUMBEROFGUESTS),
+      checkin: getRandomArrayElement(CHECKIN),
+      checkout: getRandomArrayElement(CHECKOUT),
+      features: getRandomArray(FEATURES),
+      description: getRandomArrayElement(DESCRIPTION),
+      photos: getRandomArray(PHOTOS),
+    },
+    location: {
+      lat,
+      lng,
+    },
+  };
+};
+const createAds =()=> Array.from({ length: AD_COUNT }, createAd);
+export {createAds};

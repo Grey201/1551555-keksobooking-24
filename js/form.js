@@ -28,6 +28,7 @@ price.addEventListener('input', () => {
   }
   price.reportValidity();
 });
+git
 roomNumber.addEventListener('change', () => {
 
   for (const capacity of capacities) {

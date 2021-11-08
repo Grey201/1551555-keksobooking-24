@@ -44,7 +44,7 @@ const getSimilarAd = (ad) => {
 
   collectImg.removeChild(img);
   adElement.querySelector('.popup__avatar').src = ad.author.avatar;
-  
+
   return adElement;
 };
 

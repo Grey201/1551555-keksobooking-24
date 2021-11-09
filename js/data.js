@@ -52,7 +52,7 @@ const LOCATIONLATPRECISION = 5;
 const LOCATIONLNGMIN = 139.7;
 const LOCATIONLNGMAX = 139.8;
 const LOCATIONLNGPRECISION = 5;
-const AD_COUNT = 1;
+const AD_COUNT = 3;
 
 const getRandomArrayElement = (elements) =>
   elements[getRandomIntenger(0, elements.length - 1)];

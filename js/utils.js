@@ -1,33 +1,53 @@
-// Функция, возвращающая случайное целое число из переданного диапазона включительно
-const getRandomIntenger = (min, max) => {
+const ALERT_SHOW_TIME=5000;
+const messageError=document.querySelector('#error');
+const messageSuccess=document.querySelector('#success');
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-  if (min < 0 || max < 0 || min >= max) {
+const showAlert = (message) => {
+  document.body.append(message.content.cloneNode(true));
+  let alertContainer;
+  if(message===messageError){
 
-    return 'Ошибка! Введенное число меньше нуля, либо числа равны друг другу!';
+    alertContainer=document.querySelector('.error');
+    const errorButton=document.querySelector('.error__button');
+
+    errorButton.addEventListener('click', ()=>{
+      alertContainer.remove();
+    });
+
+    document.addEventListener('click', ()=>{
+      alertContainer.remove();
+    });
+
+    document.addEventListener('keydown', (evt)=>{
+
+      if(isEscapeKey){
+        evt.preventDefault();
+        alertContainer.remove();
+      }
+    });
   }
 
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+  else {
+    alertContainer=document.querySelector('.success');
 
-const getRandomArray = (arr) => {
-  const randomArray = [];
+    setTimeout(() => {
+      alertContainer.remove();
+    }, ALERT_SHOW_TIME);
 
-  for (let element = 0; element < getRandomIntenger(0, arr.length); element++) {
-    randomArray.push(arr[element]);
+    document.addEventListener('click', ()=>{
+      alertContainer.remove();
+    });
+
+    document.addEventListener('keydown', (evt)=>{
+
+      if(isEscapeKey){
+        evt.preventDefault();
+        alertContainer.remove();
+      }
+    });
   }
-
-  return randomArray;
 };
 
-/*Функция от Кекса, возвращающая случайное число с плавающей точкой из переданного диапазона
-  включительно. Будет использоваться для генерации временных географических координат
-  в следующем задании.*/
-function getRandomPositiveFloat(number1, number2, digits = 1) {
-  const lower = Math.min(Math.abs(number1), Math.abs(number2));
-  const upper = Math.max(Math.abs(number1), Math.abs(number2));
-  const result = Math.random() * (upper - lower) + lower;
+export {showAlert, messageError, messageSuccess};
 
-  return result.toFixed(digits);
-}
-
-export {getRandomIntenger, getRandomArray, getRandomPositiveFloat};

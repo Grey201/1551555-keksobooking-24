@@ -1,3 +1,5 @@
+import {showAlert, messageError, messageSuccess} from './utils.js';
+
 const title = document.querySelector('#title');
 const price = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
@@ -19,9 +21,9 @@ title.addEventListener('input', () => {
 });
 
 price.addEventListener('input', () => {
-  const valuePrice = price.value;
+  const valuePrice = +price.value;
 
-  if (valuePrice > +price.max) {
+  if (valuePrice > price.max) {
     price.setCustomValidity('Сумма не может быть больше 1 000 000');
   } else {
     price.setCustomValidity('');
@@ -52,3 +54,29 @@ roomNumber.addEventListener('change', () => {
   }
   capacities.reportValidity();
 });
+
+const adForm = document.querySelector('.ad-form');
+
+
+adForm.addEventListener('submit', (evt)=>{
+  evt.preventDefault();
+  const formData=new FormData(evt.target);
+  fetch('https://24.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body: formData,
+    },
+  )
+    .then((response) =>{
+      if (response.ok) {
+        showAlert(messageSuccess);
+
+      } else{
+        showAlert(messageError);
+      }
+    })
+    .catch(() => {
+      showAlert(messageError);
+    });
+});
+

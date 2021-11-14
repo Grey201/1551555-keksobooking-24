@@ -1,3 +1,5 @@
+// !удалить
+
 import {getRandomIntenger, getRandomArray, getRandomPositiveFloat} from './utils.js';
 
 const TITLE = [
@@ -92,4 +94,5 @@ const createAd = () => {
   };
 };
 const createAds =()=> Array.from({ length: AD_COUNT }, createAd);
+
 export {createAds};

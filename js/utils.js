@@ -1,6 +1,11 @@
+// import {onResetForm} from './form.js';
+
 const ALERT_SHOW_TIME=5000;
 const messageError=document.querySelector('#error');
 const messageSuccess=document.querySelector('#success');
+const buttonReset=document.querySelector('.ad-form__reset');
+const containerForm=document.querySelector('.ad-form');
+const itemForm =containerForm.querySelectorAll('input');
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlert = (message) => {
@@ -48,6 +53,12 @@ const showAlert = (message) => {
     });
   }
 };
+
+const resetForm=()=>itemForm.forEach((listForm)=>{
+  listForm.textContent='';
+});
+
+buttonReset.addEventListener('click', resetForm);
 
 export {showAlert, messageError, messageSuccess};
 

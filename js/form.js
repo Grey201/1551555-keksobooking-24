@@ -80,3 +80,13 @@ adForm.addEventListener('submit', (evt)=>{
     });
 });
 
+///
+
+// const onResetForm = (listForm)=>{
+//   title = '';
+//   // price = '';
+//   // roomNumber = '';
+//   // capacities = '';
+
+
+// export {onResetForm};

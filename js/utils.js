@@ -1,5 +1,3 @@
-// import {onResetForm} from './form.js';
-
 const ALERT_SHOW_TIME=5000;
 const messageError=document.querySelector('#error');
 const messageSuccess=document.querySelector('#success');

@@ -3,7 +3,6 @@ const CENTER_POINT_LNG = 139.692;
 const ZOOM_LEVEL = 10;
 const ICON_SIZE = [36, 36];
 const ICON_ANCHOR = [18, 36];
-
 const address = document.querySelector('#address');
 
 const getSimilarAd = (ad) => {

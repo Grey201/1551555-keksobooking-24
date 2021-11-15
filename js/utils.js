@@ -59,4 +59,3 @@ const resetForm=()=>itemForm.forEach((listForm)=>{
 buttonReset.addEventListener('click', resetForm);
 
 export {showAlert, messageError, messageSuccess};
-

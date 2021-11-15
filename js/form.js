@@ -1,4 +1,5 @@
-import {showAlert, messageError, messageSuccess} from './utils.js';
+import {sendData} from './api.js';
+import { showAlert, messageError, messageSuccess } from './utils.js';
 
 const title = document.querySelector('#title');
 const price = document.querySelector('#price');
@@ -32,9 +33,7 @@ price.addEventListener('input', () => {
 });
 
 roomNumber.addEventListener('change', () => {
-
   for (const capacity of capacities) {
-
     if (roomNumber.value === '1') {
       capacity.disabled = true;
       capacities[2].disabled = false;
@@ -57,27 +56,15 @@ roomNumber.addEventListener('change', () => {
 
 const adForm = document.querySelector('.ad-form');
 
+const setFormSubmit=()=>{
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => showAlert(messageSuccess),
+      () => showAlert(messageError),
+      new FormData(evt.target),
+    );
+  });
+};
 
-adForm.addEventListener('submit', (evt)=>{
-  evt.preventDefault();
-  const formData=new FormData(evt.target);
-  fetch('https://24.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  )
-    .then((response) =>{
-      if (response.ok) {
-        showAlert(messageSuccess);
-
-      } else{
-        showAlert(messageError);
-      }
-    })
-    .catch(() => {
-      showAlert(messageError);
-    });
-});
-
-
+export {setFormSubmit};

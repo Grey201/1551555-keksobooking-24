@@ -1,3 +1,5 @@
-import './data.js';
-import './card.js';
-import './form.js';
+import {getData} from './api.js';
+import {setFormSubmit} from './form.js';
+
+getData();
+setFormSubmit();

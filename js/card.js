@@ -1,12 +1,8 @@
-import { createAds } from './data.js';
-
 const CENTER_POINT_LAT = 35.6895;
 const CENTER_POINT_LNG = 139.692;
 const ZOOM_LEVEL = 10;
 const ICON_SIZE = [36, 36];
 const ICON_ANCHOR = [18, 36];
-
-const similarAds = createAds();
 const address = document.querySelector('#address');
 
 const getSimilarAd = (ad) => {
@@ -30,22 +26,27 @@ const getSimilarAd = (ad) => {
   const featureList = featureContainer.querySelectorAll('.popup__feature');
   const collectImg = adElement.querySelector('.popup__photos');
   const img = collectImg.querySelector('img');
-  const modifiers = ad.offer.features.map((feature) => `popup__feature--${feature}`);
 
-  featureList.forEach((featureListItems) => {
-    const modifier = featureListItems.classList[1];
+  if(ad.offer.features!==undefined){
 
-    if (!modifiers.includes(modifier)) {
-      featureListItems.remove();
-    }
-  });
+    const modifiers = ad.offer.features.map((feature) => `popup__feature--${feature}`);
+    featureList.forEach((featureListItems) => {
+      const modifier = featureListItems.classList[1];
 
-  ad.offer.photos.forEach((photo) => {
-    const imgBlock = img.cloneNode(true);
-    imgBlock.src = photo;
-    collectImg.appendChild(imgBlock);
-  });
+      if (!modifiers.includes(modifier)) {
+        featureListItems.remove();
+      }
+    });
+  }
 
+  if(ad.offer.photos!==undefined){
+
+    ad.offer.photos.forEach((photo) => {
+      const imgBlock = img.cloneNode(true);
+      imgBlock.src = photo;
+      collectImg.appendChild(imgBlock);
+    });
+  }
   collectImg.removeChild(img);
   adElement.querySelector('.popup__avatar').src = ad.author.avatar;
 
@@ -89,23 +90,30 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${coordinates.lat} ${coordinates.lng}`;
 });
 
-similarAds.forEach((similarAd) => {
-  const { location } = similarAd;
-  const icon = L.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: ICON_SIZE,
-    iconAnchor: ICON_ANCHOR,
+const getMarker=(similarAds)=>{
+  similarAds.forEach((similarAd) => {
+
+    const { location } = similarAd;
+    const icon = L.icon({
+      iconUrl: './img/pin.svg',
+      iconSize: ICON_SIZE,
+      iconAnchor: ICON_ANCHOR,
+    });
+
+    const marker = L.marker(
+      {
+        lat: location.lat,
+        lng: location.lng,
+      },
+      {
+        icon: icon,
+      },
+    );
+
+    marker.addTo(map)
+      .bindPopup(getSimilarAd(similarAd));
   });
+};
 
-  const marker = L.marker(
-    {
-      lat: location.lat,
-      lng: location.lng,
-    },
-    {
-      icon: icon,
-    },
-  );
+export {getMarker};
 
-  marker.addTo(map).bindPopup(getSimilarAd(similarAd));
-});

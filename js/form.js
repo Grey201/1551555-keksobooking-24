@@ -1,3 +1,6 @@
+import {sendData} from './api.js';
+import { showAlert, messageError, messageSuccess } from './utils.js';
+
 const title = document.querySelector('#title');
 const price = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
@@ -19,9 +22,9 @@ title.addEventListener('input', () => {
 });
 
 price.addEventListener('input', () => {
-  const valuePrice = price.value;
+  const valuePrice = +price.value;
 
-  if (valuePrice > +price.max) {
+  if (valuePrice > price.max) {
     price.setCustomValidity('Сумма не может быть больше 1 000 000');
   } else {
     price.setCustomValidity('');
@@ -30,9 +33,7 @@ price.addEventListener('input', () => {
 });
 
 roomNumber.addEventListener('change', () => {
-
   for (const capacity of capacities) {
-
     if (roomNumber.value === '1') {
       capacity.disabled = true;
       capacities[2].disabled = false;
@@ -52,3 +53,18 @@ roomNumber.addEventListener('change', () => {
   }
   capacities.reportValidity();
 });
+
+const adForm = document.querySelector('.ad-form');
+
+const setFormSubmit=()=>{
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => showAlert(messageSuccess),
+      () => showAlert(messageError),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {setFormSubmit};

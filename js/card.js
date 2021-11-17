@@ -3,7 +3,9 @@ const CENTER_POINT_LNG = 139.692;
 const ZOOM_LEVEL = 10;
 const ICON_SIZE = [36, 36];
 const ICON_ANCHOR = [18, 36];
+const SIMILAR_AD_COUNT= 10;
 const address = document.querySelector('#address');
+
 
 const getSimilarAd = (ad) => {
   const cardTemplate = document
@@ -90,9 +92,30 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${coordinates.lat} ${coordinates.lng}`;
 });
 
-const getMarker=(similarAds)=>{
-  similarAds.forEach((similarAd) => {
 
+const getAdRang=(ad)=>{
+  const typeHousingInput=document.querySelector('#housing-type');
+  const housingGuestsInput=document.querySelector('#housing-guests');
+  let rank=0;
+  if(ad.offer.type===typeHousingInput.value){
+    rank+=2;
+  }
+  if(ad.offer.guests===housingGuestsInput.value){
+    rank+=1;
+  }
+  return rank;
+};
+
+const compareAd = (adA, adB) => {
+  const rankA = getAdRang(adA);
+  const rankB = getAdRang(adB);
+
+  return rankB - rankA;
+};
+
+const getMarker=(similarAds)=>{
+
+  similarAds.slice().sort(compareAd).slice(0, SIMILAR_AD_COUNT).forEach((similarAd) => {
     const { location } = similarAd;
     const icon = L.icon({
       iconUrl: './img/pin.svg',
@@ -113,7 +136,8 @@ const getMarker=(similarAds)=>{
     marker.addTo(map)
       .bindPopup(getSimilarAd(similarAd));
   });
+  return similarAds;
 };
 
-export {getMarker};
+export {getMarker, getSimilarAd};
 

@@ -1,10 +1,21 @@
 import {getData} from './api.js';
-import {setFormSubmit, setTypeChange} from './form.js';
-import{getMarker} from './card.js';
+import {setFormSubmit} from './form.js';
+import{housingGuestsInput, typeHousingInput} from './map.js';
 
-getData((similarAds)=>{
-  getMarker(similarAds);
-  setTypeChange(()=>getMarker(similarAds));
+getData();
+
+typeHousingInput.addEventListener('change',(evt)=>{
+
+  if(evt.target.value){
+    getData();
+  }
+});
+
+housingGuestsInput.addEventListener('change',(evt)=>{
+
+  if(evt.target.value){
+    getData();
+  }
 });
 
 setFormSubmit();

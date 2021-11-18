@@ -5,7 +5,9 @@ const ICON_SIZE = [36, 36];
 const ICON_ANCHOR = [18, 36];
 const SIMILAR_AD_COUNT= 10;
 const address = document.querySelector('#address');
-
+const mapFilters=document.querySelector('.map__filters');
+const typeHousingInput=mapFilters.querySelector('#housing-type');
+const housingGuestsInput=mapFilters.querySelector('#housing-guests');
 
 const getSimilarAd = (ad) => {
   const cardTemplate = document
@@ -92,17 +94,17 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${coordinates.lat} ${coordinates.lng}`;
 });
 
-
 const getAdRang=(ad)=>{
-  const typeHousingInput=document.querySelector('#housing-type');
-  const housingGuestsInput=document.querySelector('#housing-guests');
   let rank=0;
+
   if(ad.offer.type===typeHousingInput.value){
     rank+=2;
   }
+
   if(ad.offer.guests===housingGuestsInput.value){
     rank+=1;
   }
+
   return rank;
 };
 
@@ -136,8 +138,10 @@ const getMarker=(similarAds)=>{
     marker.addTo(map)
       .bindPopup(getSimilarAd(similarAd));
   });
+
   return similarAds;
+
 };
 
-export {getMarker, getSimilarAd};
+export {getMarker, getSimilarAd, typeHousingInput, housingGuestsInput};
 

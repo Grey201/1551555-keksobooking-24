@@ -1,4 +1,4 @@
-import { getMarker } from './card.js';
+import { getMarker } from './map.js';
 
 const getData = () => {
 
